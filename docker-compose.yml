@@ -1,0 +1,70 @@
+# =============================================================================
+# SC4S Docker Compose Deployment
+# =============================================================================
+# Usage: docker-compose up -d
+# Prerequisites: .env file with HEC configuration
+# =============================================================================
+
+version: "3.7"
+
+services:
+  sc4s:
+    image: ghcr.io/splunk/splunk-connect-for-syslog/container3:latest
+    container_name: sc4s
+    hostname: sc4s
+    restart: unless-stopped
+
+    # Environment configuration
+    env_file:
+      - .env
+
+    # Port mappings
+    ports:
+      # Syslog UDP
+      - "514:514/udp"
+      # Syslog TCP
+      - "514:514/tcp"
+      # Syslog TCP (RFC 5425 TLS)
+      - "6514:6514/tcp"
+      # Syslog TCP (RFC 3195 - Reliable)
+      - "601:601/tcp"
+
+    # Volume mounts for persistent configuration
+    volumes:
+      # SC4S local context (index/sourcetype overrides)
+      - ./configs/local/context:/opt/syslog-ng/etc/conf.d/local/context:z
+      # SC4S local config addons (custom log paths)
+      - ./configs/local/config:/opt/syslog-ng/etc/conf.d/local/config:z
+      # Persistent disk buffer
+      - sc4s-var:/opt/syslog-ng/var
+      # TLS certificates (optional)
+      - ./certs:/opt/syslog-ng/tls:z
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 8G
+        reservations:
+          cpus: "2.0"
+          memory: 4G
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "supervisorctl", "status", "syslog-ng"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+volumes:
+  sc4s-var:
+    driver: local
