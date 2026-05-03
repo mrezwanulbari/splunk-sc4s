@@ -1,0 +1,60 @@
+# =============================================================================
+# splunk_metadata.csv — SC4S Index & Sourcetype Routing
+# =============================================================================
+# Format: key,metadata_field,metadata_value
+#
+# key:            The SC4S source identifier (vendor_product)
+# metadata_field: Either "index" or "sourcetype"
+# metadata_value: The target Splunk index or sourcetype override
+# =============================================================================
+
+# --- Palo Alto Networks ---
+pan_traffic,index,idx_firewall
+pan_threat,index,idx_firewall
+pan_system,index,idx_firewall
+pan_config,index,idx_firewall
+pan_globalprotect,index,idx_vpn
+pan_userid,index,idx_authentication
+
+# --- Cisco ASA / FTD ---
+cisco_asa,index,idx_network_security
+cisco_ftd,index,idx_network_security
+
+# --- Cisco IOS / NX-OS ---
+cisco_ios,index,idx_network
+cisco_nxos,index,idx_network
+
+# --- Fortinet FortiGate ---
+fortinet_fortios_traffic,index,idx_firewall
+fortinet_fortios_utm,index,idx_firewall
+fortinet_fortios_event,index,idx_firewall
+
+# --- Check Point ---
+checkpoint_syslog,index,idx_firewall
+
+# --- F5 BIG-IP ---
+f5_bigip_ltm,index,idx_loadbalancer
+f5_bigip_asm,index,idx_waf
+f5_bigip_apm,index,idx_vpn
+
+# --- Linux / Unix ---
+nix_syslog,index,idx_os_linux
+nix_audit,index,idx_os_linux
+
+# --- VMware ---
+vmware_esx,index,idx_infrastructure
+vmware_vcenter,index,idx_infrastructure
+
+# --- Cisco ISE ---
+cisco_ise,index,idx_authentication
+
+# --- Windows (via syslog) ---
+microsoft_windows,index,idx_os_windows
+
+# --- DNS ---
+infoblox_dns,index,idx_dns
+infoblox_dhcp,index,idx_dhcp
+
+# --- Proxy / Web Gateway ---
+bluecoat_proxysg,index,idx_proxy
+zscaler_nss,index,idx_proxy
