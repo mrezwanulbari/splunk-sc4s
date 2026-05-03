@@ -1,0 +1,56 @@
+<dashboard version="1.1" theme="dark">
+  <label>SC4S Monitoring Dashboard</label>
+  <description>Real-time monitoring for Splunk Connect for Syslog</description>
+
+  <row>
+    <panel>
+      <title>Events Per Second (EPS)</title>
+      <chart>
+        <search>
+          <query>
+            index=* sourcetype=sc4s:events
+            | timechart span=1m count as EPS
+          </query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Events by Sourcetype</title>
+      <chart>
+        <search>
+          <query>
+            index=* source="sc4s"
+            | stats count by sourcetype
+            | sort -count
+            | head 15
+          </query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top Syslog Sources by Volume</title>
+      <table>
+        <search>
+          <query>
+            index=* source="sc4s"
+            | stats count as events, values(sourcetype) as sourcetypes by host
+            | sort -events
+            | head 20
+          </query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</dashboard>
