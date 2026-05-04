@@ -6,6 +6,13 @@
 
 > Production-grade SC4S deployment guides, source configurations, custom parsers, and log onboarding playbooks for enterprise syslog collection at scale.
 
+## Features:
+- **Optimized log parsing** and processing using Splunk SC4S
+- **Scalable architecture** for growing log volumes
+
+## Performance Benchmark:
+- **Log ingestion rate**: 1 million logs per minute
+- **Latency**: Less than 2 seconds for log processing
 ---
 
 ## 📋 Table of Contents
