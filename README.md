@@ -1,4 +1,4 @@
-# Splunk Connect for Syslog (SC4S) — Enterprise Syslog Collection
+# Splunk Connect for Syslog (SC4S) — High-Performance Log Ingestion Pipeline with Splunk SC4S
 
 ![Splunk](https://img.shields.io/badge/Splunk-000000?style=for-the-badge&logo=splunk&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
